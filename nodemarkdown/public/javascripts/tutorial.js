@@ -4,26 +4,6 @@
 
 var converter = new Showdown.converter();
 
-//var stateData = {
-//  inputText: ''
-//};
-
-//var Renderer = React.createClass({
-//  render: function() {
-//     return (
-//     <div>
-//       <h1>Phrases</h1>
-//         <Writer updateDisplayedMD={this.updateEntries}/>
-//         <DisplayMd/>
-//     </div>
-//      );
-//   },
-//   updateEntries: function(additem) {
-//     stateData.inputText = entry;
-//     this.setState(stateData);
-//   }
-//});
-
 var DisplayMd = React.createClass({
   loadMdData: function() {
     $.getJSON('/save/mdstring', function(data) {
@@ -37,16 +17,13 @@ var DisplayMd = React.createClass({
   componentDidMount: function() {
     this.loadMdData();
 //    setInterval(this.loadMdData, 10000);
-//  propTypes: {
-//    inputText: React.PropTypes.string.isRequired
-  //},
   },
   render: function() {
     console.log(this.state.inputText);
     var rawMarkup = converter.makeHtml(this.state.inputText);
     return (
-     <div>
-       <Writer handleSubmit={this.componentDidMount} />
+     <div onSubmit={this.loadMdData}>
+       <Writer />
        <span dangerouslySetInnerHTML={{__html: rawMarkup}}/>
      </div>
     );
@@ -54,15 +31,12 @@ var DisplayMd = React.createClass({
 });
 
 var Writer = React.createClass({
-  propTypes: {
-    updateDisplayedMD: React.PropTypes.func.isRequired,
-  },
   render: function() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <textarea rows="10" cols="80" name="formText" placeholder="write something w/ md..."/>
+        <textarea rows="10" cols="80" name="formText" placeholder="write something..."/>
         <br/>
-        <input type="submit" />
+        <input className="btn btn-primary" type="submit" value="save"/>
       </form>
     );
   },
@@ -75,9 +49,7 @@ var Writer = React.createClass({
       type: 'POST',
       data: {mdstring: addItem, appName: 'nodemarkdown'},
       success: function(data) {
-        console.log('additem');
-        console.log(addItem);
-     //   this.props.updateDisplayedMD(addItem);
+        console.log('item added');
       }.bind(this),
       error: function(xhr,status,err) {
         console.error(this.props.url,status,err.toString());
