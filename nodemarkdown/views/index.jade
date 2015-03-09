@@ -4,3 +4,12 @@ block content
   script(type="text/jsx" src="javascripts/tutorial.js")
   h1 Render Some Markdown...
   div(id="content")
+  div(class="modal fade bs-example-modal-sm" id="successmodal" tabindex="-1" role="dialog")
+    div(class="modal-dialog modal-sm")
+      div(class="modal-content")
+        div(class="modal-header")
+          button(type="button" class="close" data-dismiss="modal").
+            x
+        div(class="modal-body")
+          p.
+            markdown successfully updated.

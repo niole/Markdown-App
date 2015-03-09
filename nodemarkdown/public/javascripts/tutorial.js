@@ -55,6 +55,7 @@ var Writer = React.createClass({
       data: {mdstring: addItem, appName: 'nodemarkdown'},
       success: function(data) {
         console.log('item added');
+        $('#successmodal').modal();
       }.bind(this),
       error: function(xhr,status,err) {
         console.error(this.props.url,status,err.toString());
