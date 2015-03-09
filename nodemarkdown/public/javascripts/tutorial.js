@@ -19,11 +19,11 @@ var DisplayMd = React.createClass({
 //    setInterval(this.loadMdData, 10000);
   },
   render: function() {
-    console.log(this.state.inputText);
+//    console.log(this.state.inputText);
     var rawMarkup = converter.makeHtml(this.state.inputText);
     return (
      <div onSubmit={this.loadMdData}>
-       <Writer />
+       <Writer tBoxData={this.state.inputText}/>
        <span dangerouslySetInnerHTML={{__html: rawMarkup}}/>
      </div>
     );
@@ -31,10 +31,15 @@ var DisplayMd = React.createClass({
 });
 
 var Writer = React.createClass({
+  propTypes: {
+    tBoxData: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func.isRequired
+  },
   render: function() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <textarea rows="10" cols="80" name="formText" placeholder="write something..."/>
+        <textarea rows="10" cols="80" name="formText" onChange="textchange()" value={this.props.tBoxData} placeholder="write something...">
+        </textarea>
         <br/>
         <input className="btn btn-primary" type="submit" value="save"/>
       </form>
